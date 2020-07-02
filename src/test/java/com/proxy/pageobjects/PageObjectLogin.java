@@ -10,8 +10,8 @@ public class PageObjectLogin extends PageObject {
 	{
 		WebElement usuario = driver.findElement(By.name("username"));
 		usuario.click();
-		usuario.clear(); // limpia el campo usuario
-		usuario.sendKeys( usuariop ); // copia "usuariop" en el campo usuario
+		usuario.clear();
+		usuario.sendKeys( usuariop );
 		
 		WebElement password = driver.findElement(By.name("password"));
 		password.click();
