@@ -44,6 +44,7 @@ public class IntegrationTests {
 	@After
 	public void tearDown() {
 		driver.manage().deleteAllCookies();
+		driver.navigate().to("http://localhost:8090/");
 		// Lo dejamos con las opciones con los valores por defecto.
 		PageObjectConfiguration.setToDefault(driver);
 		driver.close();
@@ -59,7 +60,7 @@ public class IntegrationTests {
 		driver.quit();
 	}
 	
-//	@Test
+	@Test
 	public void test1_1SuccessfulLogin() {
 		// Vamos a la ventana de registro.
 		driver.navigate().to("http://localhost:8090/signup");
@@ -79,7 +80,7 @@ public class IntegrationTests {
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test1_2UnsuccessfulLogin() {
 		// Vamos a la ventana de Login.
 		driver.navigate().to("http://localhost:8090/login");
@@ -90,7 +91,7 @@ public class IntegrationTests {
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test2DisconnectUserLoggedIn() {
 		// Vamos a la ventana de Login.
 		driver.navigate().to("http://localhost:8090/login");
@@ -106,7 +107,7 @@ public class IntegrationTests {
 		PageObjectNavigation.clickOption(driver, "logout", "text", "Crear una cuenta");
 	}
 	
-//	@Test
+	@Test
 	public void test3_1setBasicOption1ToDefault() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -120,7 +121,7 @@ public class IntegrationTests {
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test3_2setBasicOption1BrowserButNotOS() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -134,7 +135,7 @@ public class IntegrationTests {
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test3_3setBasicOption1BrowserAndOS() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -148,7 +149,7 @@ public class IntegrationTests {
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test4setBasicOption2SpanishHosts() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -158,12 +159,12 @@ public class IntegrationTests {
 		// Navegamos hacia un sitio web que esté incluido en la lista de hosts españoles maliciosos.
 		driver.navigate().to("http://www.media-match.com");
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Se debe visualizar el texto "Site blocked by Proxy.".
-		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Site blocked by Proxy.", PageObject.getTimeout());
+		// Se debe visualizar el texto "BLOCKED BY PROXY :)".
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "BLOCKED BY PROXY :)", PageObject.getTimeout());
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test5setBasicOption3MaliciousHosts() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -173,12 +174,12 @@ public class IntegrationTests {
 		// Navegamos hacia un sitio web que esté incluido en la lista de hosts maliciosos.
 		driver.navigate().to("http://2amsports.com");
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Se debe visualizar el texto "Site blocked by Proxy.".
-		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Site blocked by Proxy.", PageObject.getTimeout());
+		// Se debe visualizar el texto "BLOCKED BY PROXY :)".
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "BLOCKED BY PROXY :)", PageObject.getTimeout());
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test6setBasicOption4TrackerHosts() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -188,12 +189,12 @@ public class IntegrationTests {
 		// Navegamos hacia un sitio web que esté incluido en la lista de hosts que rastrean usuarios.
 		driver.navigate().to("http://publicidad.elmundo.es");
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Se debe visualizar el texto "Site blocked by Proxy.".
-		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Site blocked by Proxy.", PageObject.getTimeout());
+		// Se debe visualizar el texto "BLOCKED BY PROXY :)".
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "BLOCKED BY PROXY :)", PageObject.getTimeout());
 		assertEquals(elements.size(), 1);
 	}
 	
-//	@Test
+	@Test
 	public void test7setBasicOption5PornographicHosts() {
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
@@ -203,8 +204,8 @@ public class IntegrationTests {
 		// Navegamos hacia un sitio web que esté incluido en la lista de hosts con contenido pornográfico.
 		driver.navigate().to("http://www.xvideos.com");
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Se debe visualizar el texto "Site blocked by Proxy.".
-		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Proxy error", PageObject.getTimeout());
+		// Se debe visualizar el texto "BLOCKED BY PROXY :)".
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "BLOCKED BY PROXY :)", PageObject.getTimeout());
 		assertEquals(elements.size(), 1);
 	}
 	
@@ -231,18 +232,95 @@ public class IntegrationTests {
 	
 	@Test
 	public void test9setAdvancedOption2Cookies() {
+		// Navegamos hacia un sitio web de pruebas.
+		driver.navigate().to("http://localhost:8090/testCookieHeader");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Se debe visualizar el texto "Cookies are sent.".
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Cookies are sent.", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
+		
 		// Vamos a la ventana de Configuración.
 		driver.navigate().to("http://localhost:8090/");
 		SeleniumUtils.esperarSegundos(driver, 1);
 		// Rellenamos las opciones avanzadas de configuración y pulsamos el botón "Guardar preferencias".
 		PageObjectConfiguration.fillAdvancedOptions(driver, new ArrayList<String>(), true);
+		// Navegamos hacia un sitio web de pruebas.
+		driver.navigate().to("http://localhost:8090/testCookieHeader");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Se debe visualizar el texto "Cookies are not sent or recieved.".
+		elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Cookies are not sent or recieved.", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
+	}
+	
+	@Test
+	public void test10_1addSecurityException() {
+		// Vamos a la ventana de Configuración.
+		driver.navigate().to("http://localhost:8090/");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Rellenamos las opciones avanzadas de configuración y pulsamos el botón "Guardar preferencias".
+		List<String> securityHeaders = new ArrayList<String>();
+		securityHeaders.add("Content-Security-Policy");
+		securityHeaders.add("Strict-Transport-Security");
+		securityHeaders.add("X-Content-Type-Options");
+		securityHeaders.add("X-Frame-Options");
+		securityHeaders.add("X-Xss-Protection");
+		PageObjectConfiguration.fillAdvancedOptions(driver, securityHeaders, false);
 		// Navegamos hacia un sitio web que no implemente las cabeceras de seguridad especificadas.
 		driver.navigate().to("http://www.uniovi.es");
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Se debe visualizar el texto "Site blocked by Proxy.".
+		// Se debe visualizar el texto "Website does not implement the security headers".
 		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Website does not implement the security headers", PageObject.getTimeout());
 		assertEquals(elements.size(), 1);
+		// Añadimos la excepción de seguridad
+		String href = "http://localhost:8090/addSecurityException?host=www.uniovi.es";
+		PageObjectNavigation.clickOption(driver, href, "text", "Ahora puede visitar el siguiente sitio web");
+		// Vamos a la pantalla de configuración nuevamente a comprobar que se ha añadido correctamente la excepción de seguridad.
+		driver.navigate().to("http://localhost:8090/");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		
+		PageObjectConfiguration.openManageSecurityExceptions(driver);
+		elements = SeleniumUtils.EsperaCargaPagina(driver, "class", "secExceptionInfo", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
 	}
+	
+	@Test
+	public void test10_2checkIfSecurityExceptionWasAdded() {
+		// A raíz del test anterior, tenemos una excepción sobre el sitio web "www.uniovi.es".
+		// Vamos a comprobar primero que seguimos teniendo dicha excepción de seguridad.
+		driver.navigate().to("http://localhost:8090/");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PageObjectConfiguration.openManageSecurityExceptions(driver);
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "class", "secExceptionInfo", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
+
+		// Navegamos hacia el sitio web www.uniovi.es, y comprobamos que podemos visualizarlo correctamente
+		// (es decir, no deberíamos ver el texto "Website does not implement the security headers")
+		driver.navigate().to("http://www.uniovi.es");
+		SeleniumUtils.textoNoPresentePagina(driver, "Website does not implement the security headers");
+	}
+	
+	@Test
+	public void test10_3deleteSecurityExceptionAndTryToNavigateAgain() {
+		// A raíz del test anterior, tenemos una excepción sobre el sitio web "www.uniovi.es".
+		// Vamos a comprobar primero que seguimos teniendo dicha excepción de seguridad.
+		driver.navigate().to("http://localhost:8090/");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PageObjectConfiguration.openManageSecurityExceptions(driver);
+		List<WebElement> elements = SeleniumUtils.EsperaCargaPagina(driver, "class", "secExceptionInfo", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
+
+		// Borramos la excepción de seguridad
+		PageObjectConfiguration.deleteSecurityException(driver, "www.uniovi.es");
+		
+		// Navegamos hacia el sitio web www.uniovi.es, y comprobamos que está bloqueado.
+		driver.navigate().to("http://www.uniovi.es");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Se debe visualizar el texto "Website does not implement the security headers".
+		elements = SeleniumUtils.EsperaCargaPagina(driver, "text", "Website does not implement the security headers", PageObject.getTimeout());
+		assertEquals(elements.size(), 1);
+	}
+	
+	
 	
 	/*
 	 * 

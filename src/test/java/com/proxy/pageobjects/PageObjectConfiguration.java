@@ -78,4 +78,15 @@ public class PageObjectConfiguration extends PageObject {
 		select.deselectAll();
 	}
 	
+	static public void openManageSecurityExceptions(WebDriver driver) {
+		// Pulsar el botón para guardar preferencias.
+		By boton = By.id("manageExceptions");
+		driver.findElement(boton).click();
+	}
+	
+	static public void deleteSecurityException(WebDriver driver, String host){
+		// Pulsar el botón para eliminar la excepción de seguridad.
+		By boton = By.id("button-" + host);
+		driver.findElement(boton).click();
+	}
 }
